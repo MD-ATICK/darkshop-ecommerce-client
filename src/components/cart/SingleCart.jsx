@@ -9,7 +9,7 @@ function SingleCart({ product }) {
 
   return (
     <div className='flex items-center justify-between pr-4 gap-x-6'>
-      <Link to={`/product/details/${product.name.split(' ').join('-')}`} >
+      <Link to={`/product/details/${product.name}`} >
         <div className='flex items-center gap-x-4'>
           <img src={product.images[0]} className='h-[80px]' alt="" />
           <div className='flex flex-col  justify-between '>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 function OrderSummary({ stock_product, stock_product_shops }) {
 
@@ -46,7 +47,12 @@ function OrderSummary({ stock_product, stock_product_shops }) {
           <p className='text-[18px] tracking-wide font-sans font-[600] flex items-center gap-x-2 text-green-700'>SubTotal</p>
           <p className='text-[20px] text-stone-600 font-semibold tracking-wide'>${(product_total_amount + (65 * stock_product_shops.length)).toLocaleString()}</p>
         </div>
-        <button onClick={() => orderStepFristHanlder()} className=' mt-4 py-3 text-[14px] tracking-wide font-sans font-[600] bg-teal-700 text-white shadow-md rounded-lg duration-150 hover:scale-105'>Process to Checkout ~ ${(product_total_amount + (65 * stock_product_shops.length)).toLocaleString()}</button>
+        {
+          stock_product.length === 0 ?
+            <button onClick={() => toast.error('pls add stock product cart.')} className=' mt-4 py-3 text-[14px] tracking-wide font-sans font-[600] bg-teal-700 opacity-60 text-white shadow-md rounded-lg duration-150 '>Process to Checkout ~ ${(product_total_amount + (65 * stock_product_shops.length)).toLocaleString()}</button>
+            :
+            <button onClick={() => orderStepFristHanlder()} className=' mt-4 py-3 text-[14px] tracking-wide font-sans font-[600] bg-teal-700 text-white shadow-md rounded-lg duration-150 hover:scale-105'>Process to Checkout ~ ${(product_total_amount + (65 * stock_product_shops.length)).toLocaleString()}</button>
+        }
       </div>
     </div>
   )

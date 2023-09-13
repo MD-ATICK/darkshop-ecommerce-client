@@ -20,7 +20,7 @@ function CateLessHeader() {
 
     const dispatch = useDispatch()
 
-    const { customer, fetch } = useSelector(state => state.auth)
+    const { customer, fetch, status } = useSelector(state => state.auth)
     const { wishlists } = useSelector(state => state.wishlist)
     const { carts } = useSelector(state => state.cart)
 
@@ -60,11 +60,11 @@ function CateLessHeader() {
 
                     </div>
                     <nav className='md:hidden flex items-center gap-x-10 text-[16px] tracking-wide font-[600] text-stone-500 '>
-                        <NavLink to='/' className=' hover:text-[#02615d]' >HOME</NavLink>
-                        <NavLink to='/product' className=' hover:text-[#02615d]' >PRODUCTS</NavLink>
-                        <NavLink to='/blog' className=' hover:text-[#02615d]' >BLOG</NavLink>
-                        <NavLink to='/about' className=' hover:text-[#02615d]' >ABOUT</NavLink>
-                        <NavLink to='/contact' className=' hover:text-[#02615d]' >CONTACT</NavLink>
+                        <NavLink onClick={() => dispatch(changeScreenShow(false))} to='/' className=' hover:text-[#02615d]' >HOME</NavLink>
+                        <NavLink onClick={() => dispatch(changeScreenShow(false))} to='/product' className=' hover:text-[#02615d]' >PRODUCTS</NavLink>
+                        <NavLink onClick={() => dispatch(changeScreenShow(false))} to='/blog' className=' hover:text-[#02615d]' >BLOG</NavLink>
+                        <NavLink onClick={() => dispatch(changeScreenShow(false))} to='/about' className=' hover:text-[#02615d]' >ABOUT</NavLink>
+                        <NavLink onClick={() => dispatch(changeScreenShow(false))} to='/contact' className=' hover:text-[#02615d]' >CONTACT</NavLink>
                     </nav>
                     <div className='flex items-center sm:gap-x-3 gap-x-5'>
                         <button onClick={() => {
@@ -83,7 +83,7 @@ function CateLessHeader() {
                                 <button title='account' className='md:block hidden border-l pl-[10px] border-gray-300'>
                                     <Link to={'/dashboard'} className='flex items-center gap-x-[8px] text-gray-600 hover:text-sky-700'>
                                         <img src={customer?.avatar || 'https://divedigital.id/wp-content/uploads/2022/07/11-Blank-Profile-Picture-Black.jpg'} className='h-[24px] w-[24px] rounded-full shadow-lg' alt="" />
-                                        <p className='text-[14px]  font-[600] text-stone-600   '>{customer.name.split(' ')[0]}</p>
+                                        <p className='text-[14px]  font-[600] text-stone-600   '>{customer?.name.split(' ')[0]}</p>
                                     </Link>
                                 </button>
                                 :
@@ -159,33 +159,39 @@ function CateLessHeader() {
                     </div>
                 </div>
             </div> */}
-            <div onClick={() => setnavbarSlideShow(true)} className={`fixed top-0 left-0 duration-100 ${navbarSlideShow ? 'w-full' : 'w-0 overflow-hidden'} h-screen bg-[#0000007a] z-[9999]`}>
+
+
+            {/* new premium navbar */}
+            <div onClick={() => {
+                setnavbarSlideShow(false)
+                dispatch(changeScreenShow(false))
+            }} className={`fixed top-0 left-0 duration-100 ${navbarSlideShow ? 'w-full' : 'w-0 overflow-hidden'} h-screen bg-[#0000007a] z-[9999]`}>
                 <div onClick={(e) => e.stopPropagation()} className={`fixed left-0 top-0 h-screen ${navbarSlideShow ? 'w-[350px] px-5' : 'w-0 p-0 overflow-hidden'} duration-500 shadow-lg opacity-[0.98] py-5 bg-[#edf3f3] z-[9999]`}>
-                    <button onClick={() => setnavbarSlideShow(false)} className='hover:scale-105 duration-150 absolute top-5 right-5'> <MdClose className='text-[32px] text-teal-800' /> </button>
-                    <div>
-                        <Link to={'/'} className=' text-[15px] font-[500]' >Home <span className=' text-stone-400'>/</span></Link>
-                        <Link to={'/'} className=' text-[15px] font-[500] text-teal-700' > account</Link>
-                    </div>
-                    <h1 className=' pt-6 pb-8 text-[24px] text-stone-700 font-[600] tracking-wide'>My Account</h1>
+                    <button onClick={() => {
+                        dispatch(changeScreenShow(false))
+                        setnavbarSlideShow(false)
+                    }} className='hover:scale-105 duration-150 absolute top-5 right-5'> <MdClose className='text-[32px] text-teal-800' /> </button>
+
+                    <h1 className='text-[26px] my-3 text-transparent bg-clip-text bg-gradient-to-r from-stone-500 font-bold to-stone-800'><span className='text-sky-600 text-[35px]'>D</span>-Shop bazar</h1>
                     <div className=' w-full pl-4'>
                         <div className='account flex flex-col gap-y-1'>
-                            <NavLink to={'/'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3  px-4  rounded-md'>
+                            <NavLink onClick={() => dispatch(changeScreenShow(false))} to={'/'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3  px-4  rounded-md'>
                                 <p><BiHome /></p>
                                 <p className=' text-[15px] tracking-wide'>Home</p>
                             </NavLink>
-                            <NavLink to={'/products'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
+                            <NavLink onClick={() => dispatch(changeScreenShow(false))} to={'/product'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
                                 <p><BiUser /></p>
                                 <p className=' text-[15px] tracking-wide'>Products</p>
                             </NavLink>
-                            <NavLink to={'/blog'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
+                            <NavLink onClick={() => dispatch(changeScreenShow(false))} to={'/blog'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
                                 <p><BiCart /></p>
                                 <p className=' text-[15px] tracking-wide'>Blog</p>
                             </NavLink>
-                            <NavLink to={'/about'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
+                            <NavLink onClick={() => dispatch(changeScreenShow(false))} to={'/about'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
                                 <p><MdPassword /></p>
                                 <p className=' text-[15px] tracking-wide'>About</p>
                             </NavLink>
-                            <NavLink to={'/contact'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
+                            <NavLink onClick={() => dispatch(changeScreenShow(false))} to={'/contact'} className='flex items-center duration-150 hover:bg-[#dae1e1] gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
                                 <p><GrSettingsOption className='' /></p>
                                 <p className=' text-[15px] tracking-wide'>Contact</p>
                             </NavLink>

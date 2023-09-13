@@ -4,15 +4,18 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Footer from '../components/Footer'
 import api from '../api/api'
+import { useDispatch } from 'react-redux'
+import { order_cancelled, order_paid } from '../store/reducers/OrderReducer'
 
 function Payment() {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const location = useLocation()
     console.log({ location })
     // const { orderId, products, price } = location.state
 
-    const [paymentMethod, setpaymentMethod] = useState(null);
+    const [paymentMethod, setpaymentMethod] = useState({ name: 'Bkash Pay', image: './payment/bkash.png' });
     const [loading, setloading] = useState(false);
 
     const payHanlder = async () => {
@@ -22,10 +25,12 @@ function Payment() {
         const { data, status } = await api.post('/order/order-paid', { orderId: location.state.orderId }, { headers: { Authorization: `Bearer ${token}` } })
         console.log(data)
         if (status === 201) {
+            dispatch(order_paid(location.state.orderId))
             setloading(false)
             navigate('/')
             toast.success('this order paid successed.')
         } else if (status === 222) {
+            dispatch(order_cancelled(location.state.orderId))
             setloading(false)
             toast.error(data.error)
         }
@@ -41,29 +46,30 @@ function Payment() {
                 }
                 <div className=' max-w-7xl mx-auto px-2 flex md:flex-col-reverse justify-between'>
                     <div className="left md:pt-6 md:px-2 w-full  border-black ">
+                    <h1 className='text-[23px] font-[700] tracking-wide font-sans pb-4 pl-2 text-stone-700 mt-3'>Online Payment <br /><span className='text-[13px] font-[500] tracking-wide text-stone-600'>(must be order under <span className='text-[14px] font-[600] text-teal-800'>60sec</span> after ordeded.)</span></h1>
                         <div className=' h-[100px] flex items-center pt-2 gap-x-3'>
-                            <button onClick={() => setpaymentMethod({ name: 'Stripe Pay', image: '/payment/stripe.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md outline-[3px] bg-white ${paymentMethod && paymentMethod.name === 'Stripe Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
-                                <img src="/payment/stripe.png" className=' h-full' alt="" />
+                            <button onClick={() => setpaymentMethod({ name: 'Stripe Pay', image: './payment/stripe.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md outline-[3px] bg-white ${paymentMethod && paymentMethod.name === 'Stripe Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
+                                <img src="./payment/stripe.png" className=' h-full' alt="" />
                                 <p className=' text-[13px] tracking-wide'>Stripe</p>
                             </button>
-                            <button onClick={() => setpaymentMethod({ name: 'Bkash Pay', image: '/payment/bkash.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md bg-[#fff] ${paymentMethod && paymentMethod.name === 'Bkash Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
-                                <img src="/payment/bkash.png" className=' h-full' alt="" />
+                            <button onClick={() => setpaymentMethod({ name: 'Bkash Pay', image: './payment/bkash.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md bg-[#fff] ${paymentMethod && paymentMethod.name === 'Bkash Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
+                                <img src="./payment/bkash.png" className=' h-full' alt="" />
                                 <p className=' text-[13px] tracking-wide'>Bkash</p>
                             </button>
-                            <button onClick={() => setpaymentMethod({ name: 'Nogod Pay', image: '/payment/nogot.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md bg-[#fff] ${paymentMethod && paymentMethod.name === 'Nogod Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
-                                <img src="/payment/nogot.png" className=' h-full' alt="" />
+                            <button onClick={() => setpaymentMethod({ name: 'Nogod Pay', image: './payment/nogot.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md bg-[#fff] ${paymentMethod && paymentMethod.name === 'Nogod Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
+                                <img src="./payment/nogot.png" className=' h-full' alt="" />
                                 <p className=' text-[13px] tracking-wide'>Nogot</p>
                             </button>
-                            <button onClick={() => setpaymentMethod({ name: 'Rocket Pay', image: '/payment/roket.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md bg-[#fff] ${paymentMethod && paymentMethod.name === 'Rocket Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
-                                <img src="/payment/roket.png" className=' h-full' alt="" />
+                            <button onClick={() => setpaymentMethod({ name: 'Rocket Pay', image: './payment/roket.png' })} className={` h-full p-4 flex flex-col gap-y-1 items-center justify-center w-[110px] rounded-md bg-[#fff] ${paymentMethod && paymentMethod.name === 'Rocket Pay' && ' outline-[3px] shadow-lg outline outline-sky-600'}`}>
+                                <img src="./payment/roket.png" className=' h-full' alt="" />
                                 <p className=' text-[13px] tracking-wide'>Rocket</p>
                             </button>
                         </div>
                         {
                             paymentMethod &&
-                            <button onClick={payHanlder} className=' px-10 py-3 mt-12 rounded-lg bg-teal-700 shadow-lg duration-150 hover:scale-105 text-white text-[14px] tracking-wide font-sans font-semibold flex items-center gap-x-4'>{paymentMethod.name}<p className='p-1 rounded-md bg-white opacity-95'> <img src={paymentMethod.image} className='h-6 w-6' /> </p> </button>
+                            <button onClick={payHanlder} className={`px-10 py-3 my-12 mt-8 rounded-lg ${!location.state && 'opacity-60'} bg-teal-900 shadow-lg duration-150 hover:scale-105 text-white text-[14px] tracking-wide font-sans font-semibold flex items-center gap-x-4`}>{paymentMethod.name}<p className='p-1 rounded-md bg-white opacity-95'> <img src={paymentMethod.image} className='h-6 w-6' /> </p> </button>
                         }
-                        {/* <button className=' opacity-50 px-10 py-3 mt-12 rounded-lg bg-teal-800 shadow-lg duration-150 hover:scale-105 text-white text-[14px] tracking-wide font-sans font-semibold flex items-center gap-x-4'>Bkash Pay <p className='p-1 rounded-md bg-white opacity-95'> <img src='/payment/bkash.png' className='h-6 w-6' /> </p> </button> */}
+                        {/* <button className=' opacity-50 px-10 py-3 mt-12 rounded-lg bg-teal-800 shadow-lg duration-150 hover:scale-105 text-white text-[14px] tracking-wide font-sans font-semibold flex items-center gap-x-4'>Bkash Pay <p className='p-1 rounded-md bg-white opacity-95'> <img src='./payment/bkash.png' className='h-6 w-6' /> </p> </button> */}
                     </div>
                     <div className="right w-full md:px-1 pl-[150px]">
                         <div className=' bg-white p-8 2 rounded-lg shadow-md'>

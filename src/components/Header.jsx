@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux'
 
 function Header() {
 
-    const { customer, fetch } = useSelector(state => state.auth)
+    const { customer, fetch, status } = useSelector(state => state.auth)
 
 
     const [languageModal, setlanguageModal] = useState(false);
@@ -72,7 +72,7 @@ function Header() {
                                 <Link to={'/dashboard'} className='md:hidden block'>
                                     <div className='flex items-center gap-x-[8px] text-gray-600 hover:text-sky-700'>
                                         <img src={customer?.avatar || 'https://divedigital.id/wp-content/uploads/2022/07/11-Blank-Profile-Picture-Black.jpg'} className='h-[24px] w-[24px] rounded-full shadow-lg' alt="" />
-                                        <p className='text-[15px]  font-[600] text-stone-600   '>{customer.name.split(' ')[0]}</p>
+                                        <p className='text-[15px]  font-[600] text-stone-600   '>{customer?.name.split(' ')[0]}</p>
                                     </div>
                                 </Link>
                                 :

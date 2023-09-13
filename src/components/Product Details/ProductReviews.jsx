@@ -10,8 +10,8 @@ function ProductReviews() {
   const [reviewModalShow, setreviewModalShow] = useState(false);
 
   return (
-    <div className=' relative'>
-      <div className='relative flex items-center sm:px-3'>
+    <div className=' relative px-3'>
+      <div className='relative flex items-center '>
         <button onClick={() => setactiveTap(0)} className=' py-[8px] text-[14px] tracking-wide text-center sm:w-[160px] w-[250px] bg-gray-200'>Reviwes</button>
         <button onClick={() => setactiveTap(1)} className=' py-[8px] text-[14px] tracking-wide text-center sm:w-[160px] w-[250px] bg-gray-200'>Description</button>
         <button className={` absolute top-0 left-0 transform ${activeTap === 0 ? 'translate-x-[0px]' : 'sm:translate-x-[160px] translate-x-[250px]'}  duration-500 sm:w-[160px] w-[250px] bg-teal-700 text-center text-white text-[14px] font-[400] tracking-wide py-[8px]`}>{activeTap === 0 ? 'Reviews' : 'Description'}</button>
@@ -21,7 +21,7 @@ function ProductReviews() {
         activeTap === 0 ?
           <div className=' '>
             <div className='flex sm:gap-x-1 gap-x-20 py-8'>
-              <div className='left flex flex-col gap-y-1 px-4'>
+              <div className='left flex flex-col gap-y-1 px-3'>
                 <p className='sm:text-[35px] text-[50px] font-bold font-sans text-stone-800'>4.5 <span className='sm:text-[17px] text-[20px] font-semibold font-sans text-stone-400 -m-2'>/5</span></p>
                 <div className='flex items-center sm:gap-x-[1px] gap-x-1'>
                   <p><HiStar className='sm:text-[25px] text-[40px] text-yellow-500' /></p>
@@ -42,7 +42,7 @@ function ProductReviews() {
                     <p><HiStar className='sm:text-[16px] text-[22px] text-yellow-500' /></p>
                   </div>
                   <div className='flex items-center gap-x-2'>
-                    <div className=' h-[15px] bg-gray-200 w-[90px] relative'>
+                    <div className=' h-[13px] bg-gray-200 w-[70px] relative'>
                       <p className=' absolute top-0 left-0 h-full w-[70%] bg-yellow-500'></p>
                     </div>
                     <p className=' text-[13px] text-stone-500 font-[500]'>4/5</p>

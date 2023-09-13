@@ -5,7 +5,7 @@ function SingleRelatedProduct({ product }) {
     return (
         <div>
             <div className=' relative'>
-                <Link to={`/product/details/${name.split(' ').join('-')}`} >
+                <Link to={`/product/details/${name}`} >
                     <img loading='lazy' src={image} className='  hover:shadow-lg  duration-200' alt="" />
                 </Link>
                 <div className='h-8 w-16 absolute top-4 left-4 rounded-full bg-teal-700 text-white font-[500] flex justify-center items-center'>

@@ -7,7 +7,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 
 function AddressBox({ shipping_address, setshipping_address }) {
 
-  const { customer } = useSelector(state => state.auth)
+  const { customer, status } = useSelector(state => state.auth)
 
   const [addressRefair, setaddressRefair] = useState(false);
   const [name, setname] = useState('');

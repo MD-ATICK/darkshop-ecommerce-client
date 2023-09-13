@@ -3,17 +3,17 @@ import api from '../../api/api'
 
 export const loginFetch = createAsyncThunk('customer_auth/loginFetch', async (auth_data) => {
     const { data, status } = await api.post('/customer/login', auth_data)
-    return { customer: status === 222 ? data.error : data.customer, token: data.token, status }
+    return { data, status }
 })
 
 export const registerFetch = createAsyncThunk('customer_auth/registerFetch', async (register_data) => {
     const { data, status } = await api.post('/customer/register', register_data)
-    return { customer: status === 222 ? data.error : data.customer, token: data.token, status }
+    return { data, status }
 })
 
 export const meFetch = createAsyncThunk('customer_auth/meFetch', async (token) => {
     const { data, status } = await api.get('/customer/me', { headers: { Authorization: `Bearer ${token}` } })
-    return { customer: status === 222 ? data.error : data.customer, status }
+    return { data, status }
 })
 
 const auth_reducers = createSlice({
@@ -23,12 +23,16 @@ const auth_reducers = createSlice({
         token: '',
         status: null,
         fetch: false,
-        loading: false
+        loading: false,
+        error: ''
     },
     reducers: {
         logout: (state) => {
             state.customer = ''
             state.status = null
+        },
+        change_avatar: (state, action) => {
+            state.customer.avatar = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -41,10 +45,10 @@ const auth_reducers = createSlice({
         })
         builder.addCase(loginFetch.fulfilled, (state, action) => {
             state.status = action.payload.status
-            state.customer = action.payload.customer
-            state.token = action.payload.token
+            state.token = action.payload.status === 201 ? action.payload.data.token : ''
             state.fetch = true
             state.loading = false
+            action.payload.status === 201 ? state.customer = action.payload.data.customer : state.error = action.payload.data.error
         })
 
         // register
@@ -56,10 +60,10 @@ const auth_reducers = createSlice({
         })
         builder.addCase(registerFetch.fulfilled, (state, action) => {
             state.status = action.payload.status
-            state.customer = action.payload.customer
-            state.token = action.payload.token
+            state.token = action.payload.status === 201 ? action.payload.data.token : ''
             state.fetch = true
             state.loading = false
+            action.payload.status === 201 ? state.customer = action.payload.data.customer : state.error = action.payload.data.error
         })
 
         // me
@@ -70,10 +74,14 @@ const auth_reducers = createSlice({
             state.loading = true
         })
         builder.addCase(meFetch.fulfilled, (state, action) => {
-            state.customer = action.payload.customer
             state.status = action.payload.status
             state.fetch = true
             state.loading = false
+            if (action.payload.status === 200) {
+                state.customer = action.payload.data.customer
+            } else if (action.payload.status === 222) {
+                state.error = action.payload.data.error
+            }
         })
 
 
@@ -81,7 +89,7 @@ const auth_reducers = createSlice({
 })
 
 
-export const { logout } = auth_reducers.actions
+export const { logout, change_avatar } = auth_reducers.actions
 
 
 export default auth_reducers.reducer

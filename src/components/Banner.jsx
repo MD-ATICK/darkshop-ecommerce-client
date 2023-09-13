@@ -27,7 +27,7 @@ function Banner() {
     return (
         <div className=' w-full'>
             <div className=" max-w-7xl mx-auto px-3 overflow-hidden sm:pt-0 sm:pb-2 py-10">
-               
+
                 <Carousel
                     autoPlay={true}
                     infinite={true}
@@ -39,7 +39,7 @@ function Banner() {
                     {
                         [1, 2, 3, 4, 5, 6, 7].map((img, i) => {
                             return <Link className='lg-md:h-[440px] xl:[800px]' key={i}>
-                                <img src={`http://localhost:5173/banner/${img}.jpg`} className=' sm:h-[200px] shadow-lg object-cover' alt="" />
+                                <img src={`./banner/${img}.jpg`} className=' sm:h-[200px] shadow-lg object-cover' alt="" />
                             </Link>
                         })
                     }

@@ -100,8 +100,8 @@ function Category({ categoryes, cate_fetch }) {
                     {
                         cate_fetch && categoryes.length > 0 && categoryes.map((c, i) => {
                             return <div to={c.slug} key={i} className=' relative px-2 border-black '>
-                                <img src={c.image} className=' hover:scale-105 w-full h-[170px] object-cover duration-200' alt="" />
-                                <p className=' absolute top-0 left-1/2 transform rounded-b-xl py-[3px] text-[14px] font-sans font-[500] w-[140px] text-center bg-[#f2f2f2] -translate-x-1/2 text-gray-white'>{c.name}</p>
+                                <img src={c.image} className=' hover:scale-105 w-full aspect-square object-cover duration-200' alt="" />
+                                <p className=' absolute top-0 left-1/2 transform rounded-b-xl py-[3px] text-[14px] font-sans font-[500] sm:w-[80%] w-[150px] text-center bg-[#f2f2f2] -translate-x-1/2 text-gray-white'>{c.name}</p>
                             </div>
                         })
                     }

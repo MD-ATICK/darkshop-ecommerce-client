@@ -11,7 +11,7 @@ import { registerFetch } from '../store/reducers/AuthReducer';
 function Register() {
 
 
-    const { customer, status, fetch, loading, token } = useSelector(state => state.auth)
+    const { customer, status, fetch, loading, token, error } = useSelector(state => state.auth)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -34,7 +34,7 @@ function Register() {
             navigate('/')
             toast.success('customer login Successfully.')
         } else if (status === 222) {
-            toast.error(customer)   // code vull ar karone customer ar modde data o error rakci main difind kori status diye oky bye.
+            toast.error(error)   // code vull ar karone customer ar modde data o error rakci main difind kori status diye oky bye.
         }
     }, [customer]);
 

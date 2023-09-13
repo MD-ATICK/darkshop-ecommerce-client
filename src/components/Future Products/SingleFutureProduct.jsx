@@ -13,7 +13,7 @@ import { add_cart } from '../../store/reducers/CartReducer';
 
 function SingleFutureProduct({ product }) {
 
-    const { customer, fetch } = useSelector(state => state.auth)
+    const { customer, fetch, status } = useSelector(state => state.auth)
     const { wishlists } = useSelector(state => state.wishlist)
     const { carts } = useSelector(state => state.cart)
 
@@ -46,7 +46,7 @@ function SingleFutureProduct({ product }) {
     return (
         <div>
             <div className=' relative'>
-                <Link to={`/product/details/${name.split(' ').join('-')}`} >
+                <Link to={`/product/details/${name?.split(' ').join('-')}`} >
                     <img loading='lazy' src={images[0]} className='  hover:shadow-lg  duration-200' alt="" />
                 </Link>
                 <div className='h-8 w-16 absolute top-4 left-4 rounded-full bg-teal-700 text-white font-[500] flex justify-center items-center'>

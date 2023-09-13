@@ -17,7 +17,7 @@ function Login() {
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
 
-    const { customer, status, fetch, loading, token } = useSelector(state => state.auth)
+    const { customer, status, fetch, loading, token, error } = useSelector(state => state.auth)
 
     console.log({ location })
 
@@ -32,7 +32,7 @@ function Login() {
             navigate(location?.state?.pathname || '/')
             toast.success('customer login Successfully.')
         } else if (status === 222) {
-            toast.error(customer)   // code vull ar karone customer ar modde data o error rakci main difind kori status diye oky bye.
+            toast.error(error)   // code vull ar karone customer ar modde data o error rakci main difind kori status diye oky bye.
         }
     }, [customer]);
 

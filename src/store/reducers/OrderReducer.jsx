@@ -26,14 +26,15 @@ export const placeOrderFetch = createAsyncThunk('order/placeOrderFetch', async (
     })
     localStorageFormat()
     toast.success('order placed successed.')
-    return;
+    console.log('created it ', data.order)
+    return { order: data.order, status };
 })
 
 
 export const customerOrderFetch = createAsyncThunk('order/customerOrderFetch', async () => {
     const token = localStorage.getItem('dsc-token')
     const { data, status } = await api.get('/order/customer-orders', { headers: { Authorization: `Bearer ${token}` } })
- 
+
     return { orders: data.orders, status }
 })
 
@@ -45,7 +46,18 @@ const orderSlice = createSlice({
         fetch: false,
         loading: false
     },
-    reducers: {},
+    reducers: {
+        order_paid: (state, action) => {
+            const _id = action.payload
+            state.orders.find(o => o._id === _id).order_payment_status = 'paid'
+            state.orders = state.orders
+        },
+        order_cancelled: (state, action) => {
+            const _id = action.payload
+            state.orders.find(o => o._id === _id).order_delivery_status = 'cancelled'
+            state.orders = state.orders
+        }
+    },
     extraReducers: (builder) => {
 
         builder.addCase(customerOrderFetch.pending, (state, action) => {
@@ -59,11 +71,24 @@ const orderSlice = createSlice({
             state.status = action.payload.status
             state.orders = action.payload.orders
         })
+
+
+        builder.addCase(placeOrderFetch.pending, (state, action) => {
+            state.loading = true
+            state.fetch = false
+            state.status = null
+        })
+        builder.addCase(placeOrderFetch.fulfilled, (state, action) => {
+            state.loading = false
+            state.fetch = true
+            state.status = action.payload.status
+            state.orders = [...state.orders, action.payload.order]
+        })
     }
 })
 
 
-export const { } = orderSlice.actions
+export const { order_paid, order_cancelled } = orderSlice.actions
 
 
 export default orderSlice.reducer
