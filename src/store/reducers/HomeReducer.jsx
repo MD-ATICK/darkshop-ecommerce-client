@@ -2,15 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../../api/api'
 
 export const categoryesFetch = createAsyncThunk('categoryes/categoryesFetch', async () => {
-    const { data, status } = await api.get('/home/get-category', { headers: { Authorization: 'access gained!' } })
+    const { data, status } = await api.get('/v10/get-category', { headers: { Authorization: 'access gained!' } })
     return { categoryes: data.categoryes, status }
 })
 
 
 export const productsFetch = createAsyncThunk('products/productsFetch', async () => {
-    const { data, status } = await api.get('/home/get-products', { headers: { Authorization: 'access gained!' } })
-    const { products, future_products, format_latest_products, format_topRated_products, format_discount_products } = data
-    return { status, products, future_products, format_latest_products, format_topRated_products, format_discount_products }
+    const { data, status } = await api.get('/v10/get-products', { headers: { Authorization: 'access gained!' } })
+    const { allproducts, future_products, format_latest_products, format_topRated_products, format_discount_products } = data
+    return { status, allproducts, future_products, format_latest_products, format_topRated_products, format_discount_products }
 })
 
 const home_reducers = createSlice({
@@ -23,6 +23,7 @@ const home_reducers = createSlice({
 
         // products state.
         products: [],
+        allproducts: [],
         future_products: [],
         format_latest_products: [],
         format_topRated_products: [],
@@ -30,7 +31,11 @@ const home_reducers = createSlice({
         product_status: null,
         product_fetch: false
     },
-    reducers: {},
+    reducers: {
+        filter_product: (state, action) => {
+            state.products = action.payload
+        }
+    },
     extraReducers: (builder) => {
         // category fetch.
         builder.addCase(categoryesFetch.pending, (state, action) => {
@@ -46,7 +51,6 @@ const home_reducers = createSlice({
 
         // products fetch.
         builder.addCase(productsFetch.pending, (state, action) => {
-            state.products = []
             state.future_products = []
             state.format_latest_products = []
             state.format_topRated_products = []
@@ -55,7 +59,7 @@ const home_reducers = createSlice({
             state.product_status = null
         })
         builder.addCase(productsFetch.fulfilled, (state, action) => {
-            state.products = action.payload.products
+            state.allproducts = action.payload.allproducts
             state.future_products = action.payload.future_products
             state.format_latest_products = action.payload.format_latest_products
             state.format_topRated_products = action.payload.format_topRated_products
@@ -67,7 +71,7 @@ const home_reducers = createSlice({
 })
 
 
-export const { } = home_reducers.actions
+export const { filter_product } = home_reducers.actions
 
 
 export default home_reducers.reducer

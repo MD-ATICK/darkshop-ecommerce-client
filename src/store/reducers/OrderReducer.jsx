@@ -7,15 +7,13 @@ const localStorageFormat = () => {
     const stringifyCarts = localStorage.getItem('carts')
     const carts = JSON.parse(stringifyCarts)
     const filtered_carts = carts.filter(c => c.stock === 0)
-    console.log({ stringifyCarts, filtered_carts })
     localStorage.setItem('carts', JSON.stringify(filtered_carts))
 }
 
 export const placeOrderFetch = createAsyncThunk('order/placeOrderFetch', async ({ products, shops, shippingFee, shippingInfo, productsPrice, navigate }) => {
 
     const token = localStorage.getItem('dsc-token')
-    const { data, status } = token && await api.post('/order/place-order', { products, shops, shippingFee, shippingInfo, productsPrice }, { headers: { Authorization: `Bearer ${token}` } })
-    console.log('place order', data)
+    const { data, status } = token && await api.post('/v8/place-order', { products, shops, shippingFee, shippingInfo, productsPrice }, { headers: { Authorization: `Bearer ${token}` } })
 
     navigate('/payment', {
         state: {
@@ -26,14 +24,13 @@ export const placeOrderFetch = createAsyncThunk('order/placeOrderFetch', async (
     })
     localStorageFormat()
     toast.success('order placed successed.')
-    console.log('created it ', data.order)
     return { order: data.order, status };
 })
 
 
 export const customerOrderFetch = createAsyncThunk('order/customerOrderFetch', async () => {
     const token = localStorage.getItem('dsc-token')
-    const { data, status } = await api.get('/order/customer-orders', { headers: { Authorization: `Bearer ${token}` } })
+    const { data, status } = await api.get('/v8/customer-orders', { headers: { Authorization: `Bearer ${token}` } })
 
     return { orders: data.orders, status }
 })
@@ -71,6 +68,10 @@ const orderSlice = createSlice({
             state.status = action.payload.status
             state.orders = action.payload.orders
         })
+        builder.addCase(customerOrderFetch.rejected, (state, action) => {
+            state.loading = false
+            state.fetch = true
+        })
 
 
         builder.addCase(placeOrderFetch.pending, (state, action) => {
@@ -83,6 +84,10 @@ const orderSlice = createSlice({
             state.fetch = true
             state.status = action.payload.status
             state.orders = [...state.orders, action.payload.order]
+        })
+        builder.addCase(placeOrderFetch.rejected, (state, action) => {
+            state.loading = false
+            state.fetch = true
         })
     }
 })

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 function Blog() {
 
     const navigate = useNavigate()
+    
 
     return (
         <>
@@ -12,6 +13,8 @@ function Blog() {
             <div>
                 blog
                 <button onClick={() => navigate('/contact', { state: { x: 'information' } })}>Nevigate to contact</button>
+
+
             </div>
         </>
     )

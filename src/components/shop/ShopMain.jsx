@@ -2,205 +2,71 @@ import React, { useState } from 'react'
 import { HiStar, HiFilter, HiOutlineStar } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
 import SingleFutureProduct from '../Future Products/SingleFutureProduct'
+import { filterboxhanlder } from '../../store/reducers/webSmallControlsReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { ClipLoader } from 'react-spinners'
+import { Link, useNavigate } from 'react-router-dom';
 
-function ShopMain({ categoryes, cate_fetch, products, product_fetch }) {
+function ShopMain({ filter_fetch_load, searchv }) {
 
+    const navigate = useNavigate()
+    const { searchtext } = useSelector(state => state.controll)
+    const { products, product_fetch } = useSelector(state => state.home)
+
+
+    const dispatch = useDispatch()
     const [filterModalShow, setfilterModalShow] = useState(false);
 
-    // const futureProducts = [
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man',
-    //         image: 'https://fabrilife.com/image-gallery/6388945749713-square.jpg',
-    //         discount: 8,
-    //         price: 899,
-    //         avarageRatings: 4
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man and pant more.',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4ba04f-square.jpg',
-    //         discount: 15,
-    //         price: 1599,
-    //         avarageRatings: 3
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4b169a-square.jpg',
-    //         discount: 9,
-    //         price: 299,
-    //         avarageRatings: 1
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man',
-    //         image: 'https://fabrilife.com/image-gallery/6388945749713-square.jpg',
-    //         discount: 8,
-    //         price: 899,
-    //         avarageRatings: 4
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man and pant if more skillable.',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4ba04f-square.jpg',
-    //         discount: 15,
-    //         price: 1599,
-    //         avarageRatings: 3
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4b169a-square.jpg',
-    //         discount: 9,
-    //         price: 299,
-    //         avarageRatings: 1
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man',
-    //         image: 'https://fabrilife.com/image-gallery/6388945749713-square.jpg',
-    //         discount: 8,
-    //         price: 899,
-    //         avarageRatings: 4
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man and pant if more skillable.',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4ba04f-square.jpg',
-    //         discount: 15,
-    //         price: 1599,
-    //         avarageRatings: 3
-    //     },
-    //     {
-    //         name: 'Long Sleeve causa Shirt for man',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4b169a-square.jpg',
-    //         discount: 9,
-    //         price: 299,
-    //         avarageRatings: 1
-    //     },
-
-    // ]
-
-    // const categoryes = [
-    //     {
-    //         name: 'T-shirt',
-    //         image: 'https://fabrilife.com/image-gallery/6388945749713-square.jpg'
-    //     },
-    //     {
-    //         name: 'Polo Pant',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4ba04f-square.jpg'
-    //     },
-    //     {
-    //         name: 'Jacket',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4b169a-square.jpg'
-    //     },
-    //     {
-    //         name: 'Jercy',
-    //         image: 'https://fabrilife.com/image-gallery/61a794e1aa1f4-square.jpg'
-    //     },
-    //     {
-    //         name: 'T-shirt',
-    //         image: 'https://fabrilife.com/image-gallery/6388945749713-square.jpg'
-    //     },
-    //     {
-    //         name: 'Polo Pant',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4ba04f-square.jpg'
-    //     },
-    //     {
-    //         name: 'Jacket',
-    //         image: 'https://fabrilife.com/image-gallery/638741f4b169a-square.jpg'
-    //     },
-    //     {
-    //         name: 'Jercy',
-    //         image: 'https://fabrilife.com/image-gallery/61a794e1aa1f4-square.jpg'
-    //     },
-
-    // ]
-
     return (
-        <div className='max-w-7xl w-full overflow-hidden relative pt-8 pb-2 mx-auto flex '>
-            <div className={`min-w-[330px] md:absolute bg-white border-2 duration-500 ${!filterModalShow && 'transform md:translate-x-[335px]'} border-[#f2f0f0] md:h-fit z-50 top-24 rounded-sm md:pt-6 right-0 flex h-full overflow-y-scroll  flex-col gap-y-8  px-6`}>
-                <div>
-                    <h1 className='  tracking-wide font-semibold text-[26px] '>Category</h1>
-                    <div className='mt-4 ml-5 flex flex-col gap-y-3'>
-                        {
-                            cate_fetch && categoryes.map((c, i) => {
-                                return <div key={i} className='flex items-center gap-x-4'>
-                                    <input type="checkbox" id='category' />
-                                    <label htmlFor="category" className=''>{c.name}</label>
-                                </div>
-                            })
-                        }
-                    </div>
-                </div>
-                <div>
-                    <h1 className='  tracking-wide font-semibold text-[26px] '>Price</h1>
-                    <div className='mt-2 ml-6'>
-                        <input type='range' />
-                        <p className='text-[15px] text-teal-800 tracking-wide font-semibold'>$55 - $100</p>
-                    </div>
-                </div>
-                <div className='pb-6'>
-                    <h1 className='  tracking-wide font-semibold text-[26px] '>Ratings</h1>
-                    <div className='mt-4'>
-                        <div className=' flex items-center gap-x-2 py-1 px-8 rounded-2xl cursor-pointer w-fit'>
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                        </div>
-                        <div className=' flex items-center gap-x-2 py-1 px-8 rounded-2xl cursor-pointer mt-1 w-fit'>
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                        </div>
-                        <div className=' flex items-center gap-x-2 py-1 px-8 rounded-2xl cursor-pointer mt-1 w-fit'>
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                        </div>
-                        <div className=' flex items-center gap-x-2 py-1 px-8 rounded-2xl cursor-pointer mt-1 w-fit'>
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                        </div>
-                        <div className=' flex items-center gap-x-2 py-1 px-8 rounded-2xl cursor-pointer mt-1 w-fit'>
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiOutlineStar className=' text-orange-600 text-[25px]' />
-                        </div>
-                        <div className=' flex items-center gap-x-2 py-1 px-8 rounded-2xl cursor-pointer mt-1 w-fit'>
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                            <HiStar className=' text-orange-600 text-[25px]' />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className=' h-full p-2 flex-grow'>
-                <div className='h-[45px] mb-8 flex items-center md:gap-x-6 gap-x-12'>
-                    <div className=' h-full w-full flex items-center md:justify-center justify-between'>
-                        <input type="text" className=' w-full h-full bg-gray-300 rounded-lg shadow-sm shadow-gray-300 placeholder:text-stone-500 tracking-wide text-[14px] px-5' placeholder='product serarch....' />
-                        <button className=' -ml-3  h-full rounded-xl flex justify-center items-center text-center md:px-3 px-8 bg-sky-600 font-[500] text-white'><BiSearch className='text-2xl' /></button>
-                    </div>
-                    <div className='flex items-center gap-x-3 h-full'>
-                        <select name="" id="" className=' h-full bg-gray-300 px-4 text-[14px]'>
-                            <option value="">Sort By</option>
-                        </select>
-                        <button onClick={() => setfilterModalShow(!filterModalShow)} className=' hidden h-full tracking-wide rounded-xl md:flex justify-center items-center gap-x-2 text-center md:px-5 px-8 bg-sky-600 text-white font-sans font-[600]'> <HiFilter />Filter</button>
-                    </div>
-                </div>
-                <div className="grid gap-6 grid-cols-3 lg:grid-cols-2 sm:grid-cols-2">
+        <div className='max-w-7xl w-full overflow-hidden pt-8 md:pt-0 pb-2 mx-auto flex '>
+
+
+            <div className=' h-full p-2 w-full'>
+
+                <div className=' w-full pb-7 pr-2 flex items-center justify-between'>
                     {
-                        product_fetch && products.map((p, i) => {
-                            return <SingleFutureProduct key={i} product={p} />
-                        })
+                        searchv ?
+                            <p className=' md:text-[17px] text-[19px]  font-sans font-semibold tracking-wide text-stone-600'>Searching by <span className='text-[16px] font-sans text-white font-semibold tracking-wide px-2 bg-teal-700'>{searchv}</span> ({products.length})</p>
+                            :
+                            <div className='pl-2'>
+                                <Link to={'/'} className='text-[35px] sm:text-[29px] pb-1 font-sans font-bold '>shopp <span className=' -ml-2 font-bold sm:text-[22px] text-[30px] text-teal-700'>.my</span></Link>
+                                <span className=' font-[700] font-sans pl-2 tracking-wide sm:text-[22px] text-[30px] text-stone-600'>Collections</span>
+                            </div>
                     }
+                    <div className='flex items-center gap-x-3'>
+
+                        <button onClick={() => navigate('/product')} className='sm:h-8 sm:w-8 h-10 w-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center duration-150 text-[17px] font-sans  font-[600] hover:underline cursor-pointer tracking-wide'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                        </button>
+
+                        <button onClick={() => dispatch(filterboxhanlder())} className='sm:h-8 sm:w-8 h-10 w-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center duration-150 text-[17px] font-sans  font-[600] hover:underline cursor-pointer tracking-wide'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+
+                {filter_fetch_load ?
+                    <div className='p-8 w-full flex justify-center flex-col items-center gap-y-6'>
+                        <ClipLoader size={60} color='black' cssOverride={{ borderWidth: '5px' }} />
+                        <p className='text-[14px] tracking-wide'>please wait ...</p>
+                    </div> : products.length === 0 ?
+                        <div className=' w-full p-6 pb-20 text-center'>
+                            <p className=' tracking-wide flex items-center gap-x-3 flex-col gap-y-8'>
+                                <img src="/no-results.png" className=' h-32 w-32' alt="" /> no product available.
+                            </p>
+                        </div>
+                        :
+                        <div id='all products' className="grid gap-6 grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
+                            {
+                                product_fetch && products.map((p, i) => {
+                                    return <SingleFutureProduct key={i} product={p} size={300} />
+                                })
+                            }
+                        </div>}
             </div>
         </div>
     )

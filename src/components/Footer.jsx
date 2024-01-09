@@ -3,8 +3,8 @@ import { BiSolidSend} from 'react-icons/bi'
 
 function Footer() {
   return (
-    <div className="w-full bg-gray-100">
-      <div className=' max-w-7xl mx-auto py-20 md:px-7 px-4 flex gap-y-5 flex-wrap '>
+    <div className="w-full bg-gray-200  ">
+      <div className=' max-w-7xl mx-auto py-20 md:px-7 md:py-10 px-4 flex gap-y-5 flex-wrap '>
         <div className=" w-[370px] border-black">
           <p className='text-[39px] font-sans font-bold '>shopp <span className=' -ml-2 font-bold text-[40px] text-teal-700'>.my</span></p>
           <div className='mt-6 flex flex-col gap-y-2'>

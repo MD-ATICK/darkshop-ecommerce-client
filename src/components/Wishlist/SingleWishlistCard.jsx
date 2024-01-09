@@ -28,6 +28,7 @@ function SingleWishlistCard({ product }) {
                 <p className=' font-sans text-[15px] font-[500] flex items-center gap-x-2'><GiAutoRepair className='text-stone-500 text-[20px]' /> Action</p>
                 <div className='h-[30px] flex gap-x-3 items-center'>
                     <button onClick={() => {
+                        if (product.stock === 0) return toast.error('sorry, product is out of stock')
                         if (!customer) return toast.error('login frist to add cart.')
                         if (is_cart_find) return toast.error('this carts already added.')
                         dispatch(add_cart(product))

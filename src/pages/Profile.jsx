@@ -38,9 +38,8 @@ function Profile() {
         const form = new FormData()
         form.append('image', file)
         const { data: uploadData, status: uploadStatus } = await axios.post('https://api.imgbb.com/1/upload?key=57c12ab1dfd1e175a03c87dbdc436f90', form)
-        console.log({ uploadStatus })
         if (uploadStatus === 200) {
-            const { status } = await api.post('/customer/change-avatar', { avatar: uploadData.data.url }, { headers: { Authorization: `Bearer ${token}` } })
+            const { status } = await api.post('/v9/change-avatar', { avatar: uploadData.data.url }, { headers: { Authorization: `Bearer ${token}` } })
             if (status === 201) {
                 setavatarLoading(false)
                 dispatch(change_avatar(uploadData.data.url))

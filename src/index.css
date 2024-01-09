@@ -11,8 +11,14 @@
   font-family: 'Poppins', sans-serif;
 }
 
+
+
 .josefin {
   font-family: 'Josefin Sans', sans-serif;
+}
+
+.pn {
+  pointer-events: none;
 }
 
 nav .active {
@@ -51,6 +57,10 @@ ul .active {
 
 .orbitron {
   font-family: 'Orbitron', sans-serif;
+}
+
+.sn::-webkit-scrollbar  {
+  display: none;
 }
 
 .react-multiple-carousel__arrow--right {
@@ -124,7 +134,7 @@ ul .active {
   background-color: #0995851c;
 }
 
-.slide2 .active{
+.slide2 .active {
   /* background-color: white; */
   color: black;
   background-image: linear-gradient(to right, var(--tw-gradient-stops));

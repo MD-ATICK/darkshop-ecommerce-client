@@ -9,21 +9,30 @@ import { useDispatch, useSelector } from 'react-redux'
 import { categoryesFetch } from '../store/reducers/HomeReducer'
 import Search from '../components/Search'
 import { Link, useSearchParams } from 'react-router-dom'
+import SearchItemBox from '../components/Search Item box/SearchItemBox'
+import { search } from '../store/reducers/webSmallControlsReducer'
 
 function Home() {
 
+  const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
+  const { searchtext } = useSelector(state => state.controll)
   const { categoryes, cate_status, cate_fetch, products, future_products, format_latest_products, format_topRated_products, format_discount_products, product_fetch } = useSelector(state => state.home)
 
 
+
   useEffect(() => {
-    console.log('serach✅.', searchParams)
+    dispatch(search(''))
   }, [searchParams]);
 
   return (
     <div className=" w-full">
       <Header />
       <Search />
+      {
+        searchtext.length > 0 &&
+        <SearchItemBox />
+      }
       <Banner />
       <Category categoryes={categoryes} cate_fetch={cate_fetch} />
       <FutureProducts future_products={future_products} product_fetch={product_fetch} />

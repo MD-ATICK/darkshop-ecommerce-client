@@ -26,8 +26,7 @@ function Myorders() {
         const token = localStorage.getItem('dsc-token')
         if (!_id || payloading) return toast.error('you want to access in another way.')
         setpayloading(true)
-        const { data, status } = await api.post('/order/order-paid', { orderId: _id }, { headers: { Authorization: `Bearer ${token}` } })
-        console.log(data)
+        const { data, status } = await api.post('/v8/order-paid', { orderId: _id }, { headers: { Authorization: `Bearer ${token}` } })
         if (status === 201) {
             dispatch(order_paid(_id))
             setpayloading(false)

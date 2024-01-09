@@ -2,17 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../../api/api'
 
 export const loginFetch = createAsyncThunk('customer_auth/loginFetch', async (auth_data) => {
-    const { data, status } = await api.post('/customer/login', auth_data)
+    const { data, status } = await api.post('/v9/login', auth_data)
     return { data, status }
 })
 
 export const registerFetch = createAsyncThunk('customer_auth/registerFetch', async (register_data) => {
-    const { data, status } = await api.post('/customer/register', register_data)
+    const { data, status } = await api.post('/v9/register', register_data)
     return { data, status }
 })
 
 export const meFetch = createAsyncThunk('customer_auth/meFetch', async (token) => {
-    const { data, status } = await api.get('/customer/me', { headers: { Authorization: `Bearer ${token}` } })
+    const { data, status } = await api.get('/v9/me', { headers: { Authorization: `Bearer ${token}` } })
     return { data, status }
 })
 
@@ -50,6 +50,10 @@ const auth_reducers = createSlice({
             state.loading = false
             action.payload.status === 201 ? state.customer = action.payload.data.customer : state.error = action.payload.data.error
         })
+        builder.addCase(loginFetch.rejected, (state, action) => {
+            state.fetch = true
+            state.loading = false
+        })
 
         // register
         builder.addCase(registerFetch.pending, (state, action) => {
@@ -82,6 +86,10 @@ const auth_reducers = createSlice({
             } else if (action.payload.status === 222) {
                 state.error = action.payload.data.error
             }
+        })
+        builder.addCase(meFetch.rejected, (state, action) => {
+            state.fetch = true
+            state.loading = false
         })
 
 

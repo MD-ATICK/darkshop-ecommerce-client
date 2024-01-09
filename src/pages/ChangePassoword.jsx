@@ -17,9 +17,8 @@ function ChangePassoword() {
         e.preventDefault()
         const token = localStorage.getItem('dsc-token')
         setchangepassLoading(true)
-        const { data, status } = await api.post('/customer/change-password', { oldpass, newpass }, { headers: { Authorization: `Bearer ${token}` } })
+        const { data, status } = await api.post('/v9/change-password', { oldpass, newpass }, { headers: { Authorization: `Bearer ${token}` } })
         if (status === 201) {
-            console.log(data)
             setchangepassLoading(false)
             navigate('/profile')
             toast.success('change password successed.')

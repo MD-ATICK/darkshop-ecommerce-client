@@ -76,16 +76,16 @@ function TopRatedProductsCo({ format_topRated_products, product_fetch }) {
                                                             <p className='text-[19px] font-semibold text-teal-700'>${price}</p>
                                                             <p className='text-[13px] font-[400] text-stone-600'><s className='pr-1'>(${Math.floor(price - (price * (discount / 100)))}) </s> (%{discount})</p>
                                                         </div>
-                                                        <ReactStars
-                                                            value={avgRating}
-                                                            // onChange={ratingChanged}
-                                                            size={18}
-                                                            isHalf={true}
-                                                            emptyIcon={<i className="far fa-star"></i>}
-                                                            halfIcon={<i className="fa fa-star-half-alt"></i>}
-                                                            fullIcon={<i className="fa fa-star"></i>}
-                                                            activeColor="#0989a0"
-                                                        />
+                                                        <div className=' pointer-events-none'>
+                                                            <ReactStars
+                                                                value={avgRating}
+                                                                size={18}
+                                                                isHalf={false}
+                                                                emptyIcon={<i className="far fa-star"></i>}
+                                                                fullIcon={<i className="fa fa-star"></i>}
+                                                                activeColor="#0989a0"
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </Link>

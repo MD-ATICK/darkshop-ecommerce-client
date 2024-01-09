@@ -21,7 +21,6 @@ function AddressBox({ shipping_address, setshipping_address }) {
 
   const addAddressHanlder = async (e) => {
     e.preventDefault()
-    console.log({ name, address, phoneNo, postCode, province, city, area, freetime })
     localStorage.setItem('dsc_shipping_address', JSON.stringify({ name, address, phoneNo, postCode, province, city, area, freetime }))
     setshipping_address({ name, address, phoneNo, postCode, province, city, area, freetime })
     setaddressRefair(false)

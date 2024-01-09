@@ -12,7 +12,6 @@ function Payment() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
-    console.log({ location })
     // const { orderId, products, price } = location.state
 
     const [paymentMethod, setpaymentMethod] = useState({ name: 'Bkash Pay', image: './payment/bkash.png' });
@@ -22,8 +21,7 @@ function Payment() {
         const token = localStorage.getItem('dsc-token')
         if (!location.state) return toast.error('you want to access in another way.')
         setloading(true)
-        const { data, status } = await api.post('/order/order-paid', { orderId: location.state.orderId }, { headers: { Authorization: `Bearer ${token}` } })
-        console.log(data)
+        const { data, status } = await api.post('/v8/order-paid', { orderId: location.state.orderId }, { headers: { Authorization: `Bearer ${token}` } })
         if (status === 201) {
             dispatch(order_paid(location.state.orderId))
             setloading(false)

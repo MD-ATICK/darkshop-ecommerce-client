@@ -47,9 +47,13 @@ function LeftRouteSlide() {
                      <p><MdPassword /></p>
                      <p className=' text-[15px] tracking-wide'>Change Passoword</p>
                   </NavLink>
-                  <NavLink to={'/settings'} className='flex items-center gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
-                     <p><GrSettingsOption className='' /></p>
-                     <p className=' text-[15px] tracking-wide'>Settings</p>
+                  <NavLink to={'/chats'} className='flex items-center gap-x-3 py-3 text-stone-700 px-4 rounded-md'>
+                     <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                           <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                        </svg>
+                     </p>
+                     <p className=' text-[15px] tracking-wide'>Chats</p>
                   </NavLink>
                   <button onClick={LogoutHanlder} className='flex items-center gap-x-3 py-3 text-red-700 px-4 rounded-md'>
                      <p><BiLogOut /></p>
@@ -72,16 +76,17 @@ function LeftRouteSlide() {
                <p><BiCart className='text-[30px]' /></p>
                <p className=' text-[10px] tracking-wide'>My orders</p>
             </NavLink>
+            <NavLink to={'/chats'} className='flex duration-200 text-white flex-col items-center gap-x-3 py-1  px-4  rounded-md'>
+               <p>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                     <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                  </svg>
+               </p>
+               <p className=' text-[10px] tracking-wide'>Chats</p>
+            </NavLink>
             <NavLink to={'/change-password'} className='flex duration-200 text-white  flex-col items-center gap-x-3 py-1  px-4  rounded-md'>
                <p><MdPassword className='text-[26px]' /></p>
                <p className=' text-[10px] tracking-wide'>C.Password</p>
-            </NavLink>
-            <NavLink to={'/settings'} className='flex duration-200 text-white flex-col items-center gap-x-3 py-1  px-4  rounded-md'>
-               <p><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
-               </svg>
-               </p>
-               <p className=' text-[10px] tracking-wide'>Settings</p>
             </NavLink>
          </div>
       </div>

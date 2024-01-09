@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { add_wishlist, get_wishlist } from '../../store/reducers/WishlistReducer'
 import { toast } from 'react-toastify'
 import { add_cart } from '../../store/reducers/CartReducer';
+import { ClipLoader } from 'react-spinners';
 
 
 // N :- ata shope o single product hisabe use kora hoiyaace.
 
-function SingleFutureProduct({ product }) {
+function SingleFutureProduct({ product, size }) {
 
     const { customer, fetch, status } = useSelector(state => state.auth)
     const { wishlists } = useSelector(state => state.wishlist)
@@ -20,7 +21,7 @@ function SingleFutureProduct({ product }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { name, images, discount, price, avgRating } = product
+    const { _id, name, images, discount, price, avgRating } = product
 
     const is_wish_have = wishlists.find(w => w._id === product._id)
     const is_cart_have = carts.find(c => c._id === product._id)
@@ -32,6 +33,7 @@ function SingleFutureProduct({ product }) {
     }
 
     const cart_hanlder = () => {
+        if (product.stock === 0) return toast.error('sorry, product is out of stock.')
         if (fetch && !customer) {
             navigate('/login')
             return toast.error(' pls login for access all services.!')
@@ -41,14 +43,14 @@ function SingleFutureProduct({ product }) {
     }
 
 
-
-
     return (
         <div>
-            <div className=' relative'>
-                <Link to={`/product/details/${name?.split(' ').join('-')}`} >
-                    <img loading='lazy' src={images[0]} className='  hover:shadow-lg  duration-200' alt="" />
-                </Link>
+            <div className={`relative aspect-square w-full`}>
+                <div className='' onClick={() => navigate(`/product/details/${name}~${_id}`)} >
+                    <div className=' h-full w-full bg-gray-100 absolute top-0 left-0 flex justify-center items-center'> <ClipLoader size={50} color='black' cssOverride={{ borderWidth: '5px' }} /> </div>
+                    <img loading='lazy' src={images[0]} className=' absolute top-0 left-0 h-full w-full  hover:shadow-lg  object-cover duration-200' alt="" />
+                </div>
+
                 <div className='h-8 w-16 absolute top-4 left-4 rounded-full bg-teal-700 text-white font-[500] flex justify-center items-center'>
                     <p className='text-[12px]'>{discount}% OFF</p>
                 </div>
@@ -68,16 +70,18 @@ function SingleFutureProduct({ product }) {
                     <p className='font-semibold sm:text-[22px] text-[26px] text-teal-700'>${price - (Math.floor(price * (discount / 100)))}</p>
                     {/* <p className='font-[400] sm:text-[12px] text-[13px] text-stone-500'> <s className='pr-1'>${price}</s> (%{discount})</p> */}
                 </div>
-                <ReactStars
-                    value={avgRating}
-                    // onChange={ratingChanged}
-                    size={18}
-                    isHalf={true}
-                    emptyIcon={<i className="far fa-star"></i>}
-                    halfIcon={<i className="fa fa-star-half-alt"></i>}
-                    fullIcon={<i className="fa fa-star"></i>}
-                    activeColor="#0989a0"
-                />
+                <div className=' pointer-events-none'>
+
+                    <ReactStars
+                        value={avgRating}
+                        // onChange={ratingChanged}
+                        size={18}
+                        isHalf={false}
+                        emptyIcon={<i className="far fa-star"></i>}
+                        fullIcon={<i className="fa fa-star"></i>}
+                        activeColor="#0989a0"
+                    />
+                </div>
             </div>
         </div>
     )
