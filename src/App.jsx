@@ -43,7 +43,7 @@ function App() {
 	const rootFetch = async () => {
 		// const { data } = await axios.get('http://localhost:4000/api')
 		const { data } = await axios.get(
-			"https://darkshop-ecommerce-server.vercel.app/api",
+			"https://dashboard-server-render.onrender.com/api",
 		);
 		console.log(data.message);
 	};
