@@ -61,7 +61,7 @@ function App() {
 
 	useEffect(() => {
 		// socket = io("http://localhost:4000");
-		socket = io("https://darkshop-ecommerce-server.vercel.app");
+		socket = io("https://dashboard-server-render.onrender.com");
 		other_kaj();
 
 		if (customer && fetch && socket) {
